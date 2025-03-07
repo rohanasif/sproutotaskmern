@@ -1,5 +1,10 @@
 import express from "express";
-import { register, login, getProfile } from "../controllers/auth.controller.js";
+import {
+  register,
+  login,
+  getProfile,
+  logout,
+} from "../controllers/auth.controller.js";
 import { protect } from "../middleware/auth.middleware.js";
 import { validateRequest } from "../middleware/validate.middleware.js";
 import {
@@ -17,5 +22,8 @@ router.post("/login", loginValidations, validateRequest, login);
 
 // Get user profile (protected route)
 router.get("/me", protect, getProfile);
+
+// Logout route
+router.post("/logout", logout);
 
 export default router;

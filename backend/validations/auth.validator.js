@@ -1,6 +1,14 @@
 import { body } from "express-validator";
 
 export const registerValidations = [
+  body("firstName")
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage("First name must be at least 2 characters long"),
+  body("lastName")
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage("Last name must be at least 2 characters long"),
   body("username")
     .trim()
     .isLength({ min: 3 })

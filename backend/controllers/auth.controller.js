@@ -6,7 +6,7 @@ import { generateToken } from "../utils/jwt.js";
 // @access  Public
 export const register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, firstName, lastName } = req.body;
 
     // Check if user already exists
     const userExists = await User.findOne({ $or: [{ email }, { username }] });
@@ -24,6 +24,8 @@ export const register = async (req, res) => {
       username,
       email,
       password,
+      firstName,
+      lastName,
     });
 
     if (user) {
@@ -32,6 +34,8 @@ export const register = async (req, res) => {
         _id: user._id,
         username: user.username,
         email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
         token,
         expiresIn: "1d",
       });
@@ -83,6 +87,19 @@ export const getProfile = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+// @desc    Logout user
+// @route   POST /api/auth/logout
+// @access  Private
+export const logout = async (req, res) => {
+  try {
+    // Since we're using JWT, we don't need to do anything server-side
+    // The client will remove the token
+    res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
