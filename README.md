@@ -1,35 +1,58 @@
-# MERN Stack Task
+# MERN Stack Task Management Application
 
-This is a MERN (MongoDB, Express.js, React.js, Node.js) stack application that implements a task management system.
+This is a modern MERN (MongoDB, Express.js, React.js, Node.js) stack application that implements a secure and responsive task management system.
 
 ## Project Structure
 
 The project is organized into two main directories:
 
-### Backend (`backend/`)
+### Backend
 
-- Node.js/Express.js server
-- MongoDB database integration
-- RESTful API endpoints
-- JWT authentication
-- Environment configuration
+- Node.js with ES modules
+- Express.js for API routing
+- MongoDB with Mongoose ODM
+- JSON Web Tokens (JWT) for authentication
+- bcryptjs for password hashing
+- express-validator for request validation
+- cors for Cross-Origin Resource Sharing
+- dotenv for environment configuration
+- nodemon for development
 
-### Frontend (`frontend/`)
+### Frontend
 
-- React.js application
-- Redux for state management
-- Material-UI components
-- Protected routes
-- User authentication
+- React.js with Vite
+- Material-UI (MUI) components
+- Tailwind CSS for styling
+- React Router v7 for routing
+- Formik for form management
+- Yup for schema validation
+- Axios for API requests
+- MUI Icons
+- ESLint for code quality
 
 ## Features
 
-- User authentication (login/register)
-- Task management (create, read, update, delete)
-- Protected routes
-- Responsive design
-- JWT-based authentication
-- MongoDB database integration
+- User authentication system
+  - Register with validation
+  - Login with secure password handling
+  - Automatic token management
+  - Protected routes and API endpoints
+- Todo management
+  - Create, read, update, delete (CRUD) operations
+  - Per-user todo isolation
+  - Real-time validation
+  - Responsive layout
+- Security features
+  - JWT-based authentication
+  - Password hashing with bcrypt
+  - Input validation and sanitization
+  - Protected API endpoints
+- Modern UI/UX
+  - Material Design components
+  - Responsive layout with Tailwind CSS
+  - Form validation feedback
+  - Loading states and error handling
+  - Clean and intuitive interface
 
 ## Getting Started
 
@@ -38,6 +61,7 @@ The project is organized into two main directories:
 - Node.js (v14 or higher)
 - MongoDB
 - npm or yarn
+- Modern web browser (for Vite's HMR features)
 
 ### Installation
 
@@ -80,55 +104,44 @@ Frontend:
 
 ```bash
 cd frontend
-npm start
+npm run dev
+```
+
+For production build:
+
+```bash
+cd frontend
+npm run build
+npm run preview
 ```
 
 The application will be available at:
 
-- Frontend: http://localhost:3000
+- Frontend (Development): http://localhost:5173 (Vite's default port)
+- Frontend (Production Preview): http://localhost:4173
 - Backend: http://localhost:5000
+
+### Development Features
+
+- Hot Module Replacement (HMR) with Vite
+- Fast refresh for React components
+- ESLint integration
+- TypeScript support
+- Optimized production builds
 
 ## API Endpoints
 
-### Authentication
+### Authentication Routes
 
-- POST `/api/auth/register` - Register a new user
-- POST `/api/auth/login` - Login user
-- GET `/api/auth/me` - Get current user profile
+- POST `/api/auth/register` - Register a new user (requires validation)
+- POST `/api/auth/login` - Login user (requires validation)
+- GET `/api/auth/me` - Get current user profile (protected route)
+- POST `/api/auth/logout` - Logout user
 
-### Tasks
+### Todo Routes (All Protected)
 
-- GET `/api/tasks` - Get all tasks
-- POST `/api/tasks` - Create a new task
-- PUT `/api/tasks/:id` - Update a task
-- DELETE `/api/tasks/:id` - Delete a task
-
-## Technologies Used
-
-### Backend
-
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT
-- bcryptjs
-- cors
-- dotenv
-
-### Frontend
-
-- React.js
-- Redux Toolkit
-- Material-UI
-- React Router
-- Axios
-- JWT-decode
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- GET `/api/todos` - Get all todos for the authenticated user
+- POST `/api/todos` - Create a new todo (requires validation)
+- GET `/api/todos/:id` - Get a specific todo by ID (requires validation)
+- PUT `/api/todos/:id` - Update a todo (requires validation)
+- DELETE `/api/todos/:id` - Delete a todo (requires validation)
