@@ -9,16 +9,24 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Methods",
+    "Access-Control-Request-Headers",
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Enable pre-flight for all routes
+
 app.use(express.json());
-
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/todos", todoRoutes);
-
-// MongoDB Connection
-connectDB();
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -26,7 +34,20 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/todos", todoRoutes);
+
+// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(
+      "Allowed origin:",
+      process.env.FRONTEND_URL || "https://sprouto.vercel.app"
+    );
+  });
 });
+
+export default app;

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useCallback } from "react";
 import axios from "axios";
 
 // Configure axios with base URL
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 // Add request interceptor to include JWT token
 axios.interceptors.request.use((config) => {
@@ -45,7 +45,7 @@ export const TodoProvider = ({ children }) => {
       if (filters.sortBy) queryParams.append("sortBy", filters.sortBy);
       if (filters.sortOrder) queryParams.append("sortOrder", filters.sortOrder);
 
-      const response = await axios.get(`/api/todos?${queryParams.toString()}`);
+      const response = await axios.get(`/todos?${queryParams.toString()}`);
       const { data, message } = response.data;
 
       setTodos(Array.isArray(data) ? data : []);
@@ -68,7 +68,7 @@ export const TodoProvider = ({ children }) => {
     async (todoData) => {
       try {
         setError(null);
-        const response = await axios.post("/api/todos", todoData);
+        const response = await axios.post("/todos", todoData);
         const { success } = response.data;
         if (success) {
           await fetchTodos();
@@ -87,7 +87,7 @@ export const TodoProvider = ({ children }) => {
     async (id, todoData) => {
       try {
         setError(null);
-        const response = await axios.put(`/api/todos/${id}`, todoData);
+        const response = await axios.put(`/todos/${id}`, todoData);
         const { success } = response.data;
         if (success) {
           await fetchTodos();
@@ -106,7 +106,7 @@ export const TodoProvider = ({ children }) => {
     async (id) => {
       try {
         setError(null);
-        const response = await axios.delete(`/api/todos/${id}`);
+        const response = await axios.delete(`/todos/${id}`);
         const { success } = response.data;
         if (success) {
           await fetchTodos();
