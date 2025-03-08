@@ -1,6 +1,6 @@
-# MERN Stack Task Management Application
+# MERN Stack Todos Management Application
 
-This is a modern MERN (MongoDB, Express.js, React.js, Node.js) stack application that implements a secure and responsive task management system.
+This is a modern MERN (MongoDB, Express.js, React.js, Node.js) stack application that implements a secure and responsive todo management system.
 
 ## Project Structure
 
@@ -42,6 +42,12 @@ The project is organized into two main directories:
   - Per-user todo isolation
   - Real-time validation
   - Responsive layout
+  - Advanced filtering and sorting capabilities
+    - Sort todos by creation date, due date, or priority
+    - Filter todos by status (completed/incomplete)
+    - Filter todos by priority level
+    - Search todos by title or description
+    - Real-time search results
 - Security features
   - JWT-based authentication
   - Password hashing with bcrypt
@@ -141,6 +147,12 @@ The application will be available at:
 ### Todo Routes (All Protected)
 
 - GET `/api/todos` - Get all todos for the authenticated user
+  - Query Parameters:
+    - `sort`: Sort todos by field (createdAt, dueDate, priority)
+    - `order`: Sort order (asc, desc)
+    - `status`: Filter by status (completed, incomplete)
+    - `priority`: Filter by priority (high, medium, low)
+    - `search`: Search todos by title or description
 - POST `/api/todos` - Create a new todo (requires validation)
 - GET `/api/todos/:id` - Get a specific todo by ID (requires validation)
 - PUT `/api/todos/:id` - Update a todo (requires validation)

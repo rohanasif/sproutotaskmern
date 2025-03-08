@@ -31,9 +31,33 @@ export const createTodo = async (req, res) => {
 // Get all todos for the authenticated user
 export const getTodos = async (req, res) => {
   try {
-    const todos = await Todo.find({ user: req.user._id }).sort({
-      createdAt: -1,
-    });
+    const { search, sortBy, sortOrder, status } = req.query;
+
+    // Base query with user filter
+    let query = { user: req.user._id };
+
+    // Add status filter if provided
+    if (status && ["pending", "completed"].includes(status)) {
+      query.status = status;
+    }
+
+    // Add search filter if provided
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    // Build sort object
+    let sort = {};
+    if (sortBy) {
+      sort[sortBy] = sortOrder === "desc" ? -1 : 1;
+    } else {
+      sort.createdAt = -1; // Default sort
+    }
+
+    const todos = await Todo.find(query).sort(sort);
 
     if (!todos.length) {
       return res.status(200).json({

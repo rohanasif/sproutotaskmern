@@ -37,7 +37,7 @@ const Login = () => {
     try {
       setLoginError(null);
       await login(values);
-      navigate("/dashboard", { replace: true });
+      navigate("/todos", { replace: true });
     } catch (err) {
       setLoginError(err.response?.data?.message || "Failed to login");
     } finally {

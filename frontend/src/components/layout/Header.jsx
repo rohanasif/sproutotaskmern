@@ -20,36 +20,39 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="fixed" className="z-50">
+    <AppBar position="sticky" className="z-50">
       <Container maxWidth="lg" className="px-4">
         <Toolbar
           disableGutters
-          className="flex justify-between items-center min-h-[64px]"
+          className="flex items-center justify-between min-h-[64px]"
         >
           {/* Logo and Title */}
-          <div className="flex items-center space-x-2">
+          <Box className="flex items-center gap-2">
             <TaskAltIcon className="hidden md:block text-2xl" />
             <Typography
               variant="h6"
               noWrap
               className="font-mono font-bold tracking-wider cursor-pointer transition-colors hover:text-blue-100"
-              onClick={() => navigate(user ? "/dashboard" : "/")}
+              onClick={() => navigate(user ? "/todos" : "/")}
             >
               TASK MASTER
             </Typography>
-          </div>
+          </Box>
 
           {/* Auth Buttons */}
-          <div className="flex items-center space-x-4">
+          <Box className="flex items-center gap-4">
             {user ? (
               <>
-                <Typography variant="subtitle1" className="hidden sm:block">
-                  Welcome, {user.username}
+                <Typography
+                  variant="subtitle1"
+                  className="hidden sm:block my-0 leading-none"
+                >
+                  Welcome, {user.firstName}
                 </Typography>
                 <Button
                   color="inherit"
                   onClick={handleLogout}
-                  className="px-4 py-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                  className="min-h-0 hover:bg-white/10 rounded-lg transition-colors"
                 >
                   Logout
                 </Button>
@@ -59,20 +62,20 @@ const Header = () => {
                 <Button
                   color="inherit"
                   onClick={() => navigate("/login")}
-                  className="px-4 py-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                  className="min-h-0 px-4 py-1.5 hover:bg-white/10 rounded-lg transition-colors"
                 >
                   Login
                 </Button>
                 <Button
                   color="inherit"
                   onClick={() => navigate("/register")}
-                  className="px-4 py-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                  className="min-h-0 px-4 py-1.5 hover:bg-white/10 rounded-lg transition-colors"
                 >
                   Register
                 </Button>
               </>
             )}
-          </div>
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
