@@ -36,7 +36,7 @@ const TodoModal = ({ open, onClose, onSave, todo }) => {
         status: "pending",
       });
     }
-  }, [todo]);
+  }, [todo, open]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
