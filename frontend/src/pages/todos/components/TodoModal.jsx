@@ -20,6 +20,7 @@ const TodoModal = ({ open, onClose, onSave, todo }) => {
     description: "",
     status: "pending",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (todo) {
@@ -45,9 +46,14 @@ const TodoModal = ({ open, onClose, onSave, todo }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+    setIsSubmitting(true);
+    try {
+      await onSave(formData);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -126,9 +132,10 @@ const TodoModal = ({ open, onClose, onSave, todo }) => {
           <Button
             type="submit"
             variant="contained"
+            disabled={isSubmitting}
             className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm px-6"
           >
-            {todo ? "Update Task" : "Create Task"}
+            {isSubmitting ? "Saving..." : todo ? "Update Task" : "Create Task"}
           </Button>
         </DialogActions>
       </form>
